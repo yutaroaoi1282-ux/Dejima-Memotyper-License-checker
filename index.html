@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memotyper License Check</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fluent 2 スタイルのためのカスタムCSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('haikei.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 900px;
+            width: 95%;
+            margin: auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.5); /* 全体的に透明感を加える */
+            backdrop-filter: blur(10px); /* 背景をぼかす */
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        /* Fluent 2 スタイルに合わせた要素の定義 */
+        .fluent-card {
+            background-color: rgba(247, 249, 251, 0.7); /* カードも透明感を加える */
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .fluent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .fluent-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .fluent-button:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        .fluent-button:active {
+            transform: translateY(0);
+        }
+        .fluent-input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 9999px;
+            border: 1px solid #d1d5db;
+            background-color: rgba(249, 250, 251, 0.8); /* 入力欄も透明感を加える */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .fluent-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+        }
+        .text-shadow-md {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* ロゴの影のスタイルをより強く */
+        }
+        /* 花火のスタイル */
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: explode 1.5s forwards;
+        }
+        /* アニメーションの定義 */
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="app" class="container rounded-[40px] shadow-xl p-8 max-w-2xl w-full">
+        <!-- アプリ名 -->
+        <header class="text-center">
+            <h1 class="text-4xl font-bold text-gray-800 tracking-wide mb-8 text-shadow-md">Memotyper License check</h1>
+        </header>
+
+        <!-- ライセンス認証セクション -->
+        <section id="license-section" class="flex flex-col items-center justify-center space-y-6">
+            <h2 class="text-2xl font-semibold text-gray-700">ライセンスキーを入力してください</h2>
+            <div class="w-full max-w-md">
+                <input type="text" id="license-key-input" class="fluent-input text-lg text-center font-mono" placeholder="ライセンスキー" />
+            </div>
+            <button id="verify-button" class="fluent-button w-full max-w-xs">認証</button>
+        </section>
+
+        <!-- プラン紹介セクション（最初は非表示） -->
+        <section id="plan-section" class="hidden flex-col items-center justify-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">料金プラン</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                <!-- プラン1 -->
+                <div class="fluent-card">
+                    <h3 class="text-2xl font-bold mb-2">Dejima Memotyper 2025</h3>
+                    <p class="text-4xl font-extrabold text-blue-600 my-4">¥5,000</p>
+                    <p class="text-gray-600 mb-6">買い切りで全ての機能をご利用いただけます。</p>
+                    <a href="https://maps.google.com/?q=立科町芦田1282" target="_blank" class="fluent-button inline-block w-full">Dejima Storeをチェク</a>
+                </div>
+                <!-- プラン2 -->
+                <div class="fluent-card">
+                    <h3 class="text-2xl font-bold mb-2">Dejima Memotyper 365</h3>
+                    <p class="text-4xl font-extrabold text-blue-600 my-4">¥2,000<span class="text-base font-normal">/年</span></p>
+                    <p class="text-gray-600 mb-6">最新アップデDejima Storeをチェクートとサポートが含まれます。</p>
+                    <a href="https://maps.google.com/?q=立科町芦田1282" target="_blank" class="fluent-button inline-block w-full">Dejima Storeをチェク</a>
+                </div>
+            </div>
+            <!-- エラーメッセージと購入案内 -->
+            <p id="error-message" class="text-red-500 mt-6 hidden text-center"></p>
+            <p id="purchase-message" class="mt-4 text-center">
+                打ち直すか、<br>立科町芦田1282のDejima storeでご購入ください。
+            </p>
+            <!-- 打ち直しボタン -->
+            <button id="retry-button" class="mt-6 text-blue-600 hover:text-blue-800 font-semibold text-lg" onclick="showLicenseSection()">もう一度入力する</button>
+        </section>
+        
+        <!-- メッセージボックス -->
+        <div id="message-box" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+            <div class="bg-white rounded-2xl p-8 shadow-xl text-center max-w-sm w-full">
+                <p id="message-text" class="text-xl font-semibold text-gray-700"></p>
+                <button id="message-close-button" class="mt-4 fluent-button">閉じる</button>
+            </div>
+        </div>
+
+        <!-- 著作権表示 -->
+        <footer class="text-center mt-auto pt-8">
+            <p class="text-gray-500 text-sm">© 2025 Dejima.inc</p>
+        </footer>
+    </div>
+    
+    <!-- 花火のエフェクトを表示するコンテナ -->
+    <div id="fireworks-container" class="fireworks hidden"></div>
+
+    <script>
+        // 利用可能なライセンスキーのリスト
+        const validLicenseKeys = [
+            "7F8D2A9C1B4E6F0D",
+            "A3C9E7B1D5F2G8H4",
+            "4B7D2E9F1C6A3H5G",
+            "E1F9C6A2B7D4G0H3",
+            "9D3A7F0C1B6E4G8H",
+            "C2B8E5F1D7A0G4H9",
+            "F6D1B9E3A4C7H0G2",
+            "0G7H4F2C9D1BAE5",
+            "8C5G1H9E3F2DBA7",
+            "B4F9C6A3E1D7G0H"
+        ];
+
+        // 認証ボタンのイベントリスナー
+        document.getElementById('verify-button').addEventListener('click', () => {
+            const input = document.getElementById('license-key-input').value.trim().toUpperCase();
+            if (validLicenseKeys.includes(input)) {
+                // 認証成功
+                showMessageBox('ライセンス認証に成功しました！', 'success');
+                triggerFireworks();
+                
+                // 2秒後に指定のURLを開く
+                setTimeout(() => {
+                    window.open('https://drive.google.com/file/d/1W9K4lHDT6aUYMzkrwgY3E4-H5UDjjsoO/view?usp=sharing', '_self');
+                }, 2000);
+
+            } else {
+                // 認証失敗
+                showMessageBox('ライセンスキーが正しくありません。', 'error');
+                showPlanSection();
+            }
+        });
+
+        // メッセージボックスの表示関数
+        function showMessageBox(message, type) {
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+            messageText.textContent = message;
+            messageBox.classList.remove('hidden');
+        }
+
+        // メッセージボックスを閉じるボタン
+        document.getElementById('message-close-button').addEventListener('click', () => {
+            document.getElementById('message-box').classList.add('hidden');
+        });
+
+        // プラン表示セクションを表示する関数
+        function showPlanSection() {
+            const licenseSection = document.getElementById('license-section');
+            const planSection = document.getElementById('plan-section');
+            licenseSection.classList.add('hidden');
+            planSection.classList.remove('hidden');
+        }
+        
+        // ライセンス入力セクションを表示する関数
+        function showLicenseSection() {
+            const licenseSection = document.getElementById('license-section');
+            const planSection = document.getElementById('plan-section');
+            licenseSection.classList.remove('hidden');
+            planSection.classList.add('hidden');
+            document.getElementById('license-key-input').value = ''; // 入力欄をクリア
+        }
+
+        // 花火エフェクトを生成する関数
+        function triggerFireworks() {
+            const container = document.getElementById('fireworks-container');
+            container.classList.remove('hidden');
+            const numFireworks = 15;
+            const colors = ['#ff6b6b', '#f9c74f', '#90be6d', '#43aa8b', '#277da1', '#f3722c', '#f8961e', '#f9844a'];
+
+            for (let i = 0; i < numFireworks; i++) {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.left = `${Math.random() * 100}vw`;
+                firework.style.top = `${Math.random() * 100}vh`;
+
+                // 爆発アニメーション
+                const size = Math.random() * 60 + 30;
+                firework.style.width = `${size}px`;
+                firework.style.height = `${size}px`;
+                firework.style.animationName = 'explode';
+                firework.style.animationDuration = '2s';
+                firework.style.animationDelay = `${Math.random() * 0.5}s`;
+                
+                container.appendChild(firework);
+            }
+            
+            // アニメーション終了後に花火を削除
+            setTimeout(() => {
+                container.innerHTML = '';
+                container.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
